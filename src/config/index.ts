@@ -1,5 +1,4 @@
 // Using env variables.
-// require('dotenv').config()
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -11,5 +10,3 @@ export default {
   dbHost: process.env.DB_HOST,
   dbPort: process.env.DB_PORT
 };
-
-// module.exports = config;

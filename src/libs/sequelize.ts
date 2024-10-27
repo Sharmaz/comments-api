@@ -1,9 +1,6 @@
 // Some libs as ORM config.
-// const { Sequelize } = require('sequelize');
 import { Sequelize } from 'sequelize-typescript';
-// const config = require('../config');
 import config from '../config';
-// const setupModels = require('../db/models');
 import setupModels from '../db/models';
 
 const USER: string = encodeURIComponent(config.dbUser!);
@@ -23,5 +20,4 @@ const sequelize = new Sequelize(getURI(dialect), {
 
 setupModels(sequelize);
 
-// module.exports = sequelize;
 export default sequelize;

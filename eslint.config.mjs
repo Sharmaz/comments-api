@@ -4,7 +4,12 @@ import tseslint from "typescript-eslint";
 
 
 export default [
-  {ignores: ["**/src/db/migrations", "**/src/db/seeders", "**/jest.config.unit.js"]},
+  {ignores: [
+    "**/src/db/migrations",
+    "**/src/db/seeders",
+    "**/jest.config.unit.js",
+    "**/dist/**"
+  ]},
   {files: ["**/*.{js,mjs,cjs,ts}"]},
   {files: ["**/*.js"], languageOptions: {sourceType: "commonjs"}},
   {languageOptions: { globals: globals.node }},

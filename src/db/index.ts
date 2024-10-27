@@ -1,5 +1,4 @@
 // For migrations, models and seeders. Also db connection.
-// const config = require('../config');
 import config from '../config';
 
 const USER: string = encodeURIComponent(config.dbUser!);

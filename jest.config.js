@@ -10,6 +10,9 @@ module.exports = {
     '^.+\\.[tj]sx?$': ['ts-jest'],
   },
   coveragePathIgnorePatterns: [
-    "/node_modules/"
+    "/node_modules/",
+    "/dist/",
+    "/src/db/migrations/",
+    "/src/db/seeders/",
   ]
 };

@@ -1,4 +1,3 @@
-// const { Model, DataTypes } = require('sequelize');
 import { Model, DataTypes } from 'sequelize';
 
 const COMMENT_TABLE = 'comments';
@@ -35,5 +34,4 @@ class Comment extends Model {
   }
 }
 
-// module.exports = { Comment, CommentSchema, COMMENT_TABLE };
 export { Comment, CommentSchema, COMMENT_TABLE };

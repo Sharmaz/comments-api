@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-// const { models } = require('../libs/sequelize');
 import sequelize from '../libs/sequelize';
 
 import { CreateCommentDto, UpdateCommentDto } from '../dtos/comment.dto';
