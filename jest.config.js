@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   coverageDirectory: 'coverage',
@@ -6,8 +6,13 @@ export default {
   transformIgnorePatterns: [
     '[/\\\\\\\\]node_modules[/\\\\\\\\].+\\\\.(js|ts)$'
   ],
-  transform: {},
+  transform: {
+    '^.+\\.[tj]sx?$': ['ts-jest'],
+  },
   coveragePathIgnorePatterns: [
-    "/node_modules/"
+    "/node_modules/",
+    "/dist/",
+    "/src/db/migrations/",
+    "/src/db/seeders/",
   ]
 };
