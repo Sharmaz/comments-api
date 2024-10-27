@@ -1,4 +1,5 @@
-const { Model, DataTypes } = require('sequelize');
+// const { Model, DataTypes } = require('sequelize');
+import { Model, DataTypes } from 'sequelize';
 
 const COMMENT_TABLE = 'comments';
 
@@ -24,7 +25,7 @@ const CommentSchema = {
 };
 
 class Comment extends Model {
-  static config(sequelize) {
+  static config(sequelize: any) { // eslint-disable-line
     return {
       sequelize,
       tableName: COMMENT_TABLE,
@@ -34,4 +35,5 @@ class Comment extends Model {
   }
 }
 
-module.exports = { Comment, CommentSchema, COMMENT_TABLE };
+// module.exports = { Comment, CommentSchema, COMMENT_TABLE };
+export { Comment, CommentSchema, COMMENT_TABLE };

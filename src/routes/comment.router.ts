@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 
-const CommentService = require('../services/comment.service');
+import CommentService from '../services/comment.service';
+
 const commentService = new CommentService();
-
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -30,5 +30,4 @@ router.delete('/:id', async (req, res) => {
   res.status(200).json(comment);
 });
 
-
-module.exports = router;
+export default router;
