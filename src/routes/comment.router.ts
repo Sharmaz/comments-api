@@ -27,7 +27,7 @@ router.patch('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const comment = await commentService.delete(req.params.id);
-  res.status(200).json(comment);
+  res.status(204).json(comment);
 });
 
 export default router;

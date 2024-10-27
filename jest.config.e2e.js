@@ -1,17 +1,17 @@
-const commonConfig = require('./jest.config.js');
+const commonConfig = require('./jest.config');
 
 module.exports = {
   ...commonConfig,
   testMatch: [
-    '<rootDir>/tests/unit/*.unit.test.{js,ts}'
+    '<rootDir>/tests/e2e/*.e2e.test.{js,ts}'
   ],
   collectCoverageFrom: [
     '**/db/**/*.js',
     '**/libs/**/*.js',
     '**/middlewares/**/*.js',
-    '**/routes/**/*.js',
+    '**/routes/**/*.{js,ts}',
     '**/services/**/*.js',
     '**/utils/**/*.js'
   ],
-  coverageDirectory: 'coverage/unit'
+  coverageDirectory: 'coverage/e2e'
 };

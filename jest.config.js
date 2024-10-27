@@ -7,7 +7,12 @@ module.exports = {
     '[/\\\\\\\\]node_modules[/\\\\\\\\].+\\\\.(js|ts)$'
   ],
   transform: {
-    '^.+\\.[tj]sx?$': ['ts-jest'],
+    '^.+\\.[tj]sx?$': [
+      'ts-jest',
+      {
+        isolatedModules: true,
+      }
+    ],
   },
   coveragePathIgnorePatterns: [
     "/node_modules/",
