@@ -7,6 +7,7 @@ export default [
   {ignores: [
     "**/src/db/migrations",
     "**/src/db/seeders",
+    "**/src/db/sequelize.config.js",
     "**/jest.config.unit.js",
     "**/jest.config.e2e.js",
     "**/dist/**"
