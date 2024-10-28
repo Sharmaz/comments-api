@@ -1,0 +1,52 @@
+name: Deploy
+on: 
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy NodeJS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_KEY}}
+          username: ${{secrets.SSH_USERNAME}}
+          password: ${{secrets.SSH_PASSWORD}}
+
+          script: |
+            cd /var/www || exit
+            if [[ -d "/var/www/comments-backend" ]]; then
+              migrations=$(find /var/www/comments-backend/src/db/migrations | wc -l)
+              echo "Directory comments-backend exists"
+              pm2 stop comments-backend
+              pm2 delete comments-backend
+              cd comments-backend || exit
+              git pull origin main
+              echo "Deployment succesful"
+              npm install
+              echo -e "NODE_ENV=${{secrets.NODE_ENV}}\nPORT=${{secrets.PORT}}
+              DB_USER=${{secrets.DB_USER}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\nDB_HOST=${{secrets.DB_HOST}}\nDB_NAME=${{secrets.DB_NAME}}\nDB_PORT=${{secrets.DB_PORT}}" >.env
+              npm run build
+              if [[ migrations -lt $(find /var/www/comments-backend/src/db/migrations | wc -l) ]]; then
+                npm run migrations:run
+              fi
+              pm2 start ./dist/src/index.js --name comments-backend
+            else
+              echo "Directory not found"
+              git clone git@github.com:Sharmaz/comments-backend.git
+              echo "Deployment succesful"
+              cd comments-backend || exit
+              npm install
+              echo -e "NODE_ENV=${{secrets.NODE_ENV}}\nPORT=${{secrets.PORT}}
+              DB_USER=${{secrets.DB_USER}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\nDB_HOST=${{secrets.DB_HOST}}\nDB_NAME=${{secrets.DB_NAME}}\nDB_PORT=${{secrets.DB_PORT}}" >.env
+              npm run build
+              npm run migrations:run
+              npm run migrations:run:seed
+              pm2 start ./dist/src/index.js --name comments-backend
+            fi
