@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { describe, expect, test, beforeAll, afterAll, beforeEach } from '@jest/globals';
 import sequelize from '../../src/libs/sequelize';
 import { upSeed, downSeed } from './utils/umzug';
 
@@ -22,6 +22,10 @@ beforeAll(async () => {
 
 });
 
+beforeEach(async () => {
+  await upSeed();
+})
+
 afterAll(async () => {
   await downSeed();
   server.close();
@@ -33,6 +37,12 @@ describe('get /comments', () => {
     expect(statusCode).toBe(200);
     expect(Array.isArray(body)).toBe(true);
   });
+
+  test('should response with 404 if no comments', async() => {
+    await api.delete(`/api/comments/${commentElement.id}`);
+    const { statusCode } = await api.get('/api/comments/');
+    expect(statusCode).toBe(404);
+  });
 });
 
 describe('get /comments/{id}', () => {
@@ -41,6 +51,12 @@ describe('get /comments/{id}', () => {
     const { statusCode, body } = await api.get(`/api/comments/${commentElement.id}`);
     expect(statusCode).toBe(200);
     expect(body.mail).toBe(commentDb.mail);
+  });
+
+  test('should response with 404 if no comment', async() => {
+    await api.delete(`/api/comments/${commentElement.id}`);
+    const { statusCode } = await api.get('/api/comments/');
+    expect(statusCode).toBe(404);
   });
 });
 

@@ -2,12 +2,9 @@ import express from 'express';
 import cors from 'cors';
 
 import routerApi from './routes/index';
+import { logErrors } from './middlewares/error.handler';
 
 const router = express.Router();
-
-router.get('/', async (req, res) => {
-  res.send('Hello World!');
-});
 
 const createApp = () => {
   const app = express();
@@ -16,6 +13,8 @@ const createApp = () => {
   app.use(router);
 
   routerApi(app);
+
+  app.use(logErrors)
 
   return app;
 };
