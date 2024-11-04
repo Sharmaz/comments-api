@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import createHttpError from 'http-errors';
 import sequelize from '../libs/sequelize';
 
 import { CreateCommentDto, UpdateCommentDto } from '../dtos/comment.dto';
@@ -17,11 +18,19 @@ class CommentService {
   async find() {
     const comments = await sequelize.models.Comment.findAll();
 
+    if (!comments || comments.length < 1) {
+      throw createHttpError(404, 'Comments not found');
+    }
+
     return comments;
   }
 
   async findOne(id: string) {
     const comment = await sequelize.models.Comment.findByPk(id);
+
+    if (!comment) {
+      throw createHttpError(404, 'Comment not found');
+    }
 
     return comment;
   }
